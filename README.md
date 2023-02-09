@@ -1,8 +1,8 @@
 # Capitole Zara Java Test
 
-En la base de datos de comercio electrónico de la compañía disponemos de la tabla PRICES que refleja el precio final (pvp) y la tarifa que 
-aplica a un producto de una cadena entre unas fechas determinadas. A continuación se muestra un ejemplo de la tabla con los campos 
-relevantes: 
+En la base de datos de comercio electrónico de la compañía disponemos de la tabla PRICES que refleja el precio final (pvp) y la tarifa que
+aplica a un producto de una cadena entre unas fechas determinadas. A continuación se muestra un ejemplo de la tabla con los campos
+relevantes:
 
 ### PRICES
 
@@ -13,32 +13,32 @@ relevantes:
 | 1        | 2020-06-15-00.00.00 | 2020-06-15-11.00.00 | 3          | 35455      | 1        | 30.50 | EUR  |
 | 1        | 2020-06-15-16.00.00 | 2020-12-31-23.59.59 | 4          | 35455      | 1        | 38.95 | EUR  |
 
-#### CAMPOS: 
+#### CAMPOS:
 
 - BRAND_ID: foreign key de la cadena del grupo (1 = ZARA).
 - START_DATE, END_DATE: rango de fechas en el que aplica el precio tarifa indicado.
 - PRICE_LIST: Identificador de la tarifa de precios aplicable.
 - PRODUCT_ID: Identificador código de producto.
-- PRIORITY: Desambiguador de aplicación de precios. Si dos tarifas coinciden en un rango de fechas se aplica la de mayor prioridad (mayor 
+- PRIORITY: Desambiguador de aplicación de precios. Si dos tarifas coinciden en un rango de fechas se aplica la de mayor prioridad (mayor
 valor numérico).
 - PRICE: precio final de venta.
 - CURR: iso de la moneda.
 
- 
+
 
 ## REQUERIMIENTOS
 
 Construir una aplicación/servicio en SpringBoot que provea una end point rest de consulta  tal que:
- 
+
 Acepte como parámetros de entrada: fecha de aplicación, identificador de producto, identificador de cadena.
-Devuelva como datos de salida: identificador de producto, identificador de cadena, tarifa a aplicar, fechas de aplicación y precio final a 
+Devuelva como datos de salida: identificador de producto, identificador de cadena, tarifa a aplicar, fechas de aplicación y precio final a
 aplicar.
 
-Se debe utilizar una base de datos en memoria (tipo h2) e inicializar con los datos del ejemplo, (se pueden cambiar el nombre de los campos 
+Se debe utilizar una base de datos en memoria (tipo h2) e inicializar con los datos del ejemplo, (se pueden cambiar el nombre de los campos
 y añadir otros nuevos si se quiere, elegir el tipo de dato que se considere adecuado para los mismos).
 
 Desarrollar unos test al endpoint rest que validen las siguientes peticiones al servicio con los datos del ejemplo:
-                                                                                       
+
 - Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 - Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 - Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)
@@ -52,7 +52,7 @@ Se valorará:
 
 ### INSTRUCCIONES
 
-Tienes que desarrollar un artefacto que cumpla los objetivos del enunciado y hacer disponible y accesible el código del artefacto con un 
+Tienes que desarrollar un artefacto que cumpla los objetivos del enunciado y hacer disponible y accesible el código del artefacto con un
 repositorio de git público (github, gitlab o lo que prefieras).
 
 En cuanto a los aspectos a tener en cuenta para el desarrollo, te los detallo a continuación:
@@ -75,7 +75,7 @@ P.e.: recomendado utilizar Java11;… usar streams, optionals y localdatetime.
 
 #### Spring
 - Usar correctamente los archivos de recursos (definición del datasource e inicialización de la base de datos).
-- Uso de advice para manejo de excepciones. 
+- Uso de advice para manejo de excepciones.
 
 #### CleanCode
 - Nombrado de métodos y variables de manera clara.
@@ -93,7 +93,7 @@ P.e.: recomendado utilizar Java11;… usar streams, optionals y localdatetime.
 - Arquitectura estructurada y cuanto más legible sea el código ¡mejor que mejor!
 - Tener presente los principios SOLID para el desarrollo (responsabilidad única, open Closed para la extensibilidad del código sin tener que
 alterarlo...etc).
-- En términos de buenas prácticas, no debemos acoplar nuestras soluciones a las BBDD porque si resulta que debemos cambiar la misma, nuestra 
+- En términos de buenas prácticas, no debemos acoplar nuestras soluciones a las BBDD porque si resulta que debemos cambiar la misma, nuestra
 solución puede dejar de funcionar.
 - Lo recomendable es testear los componentes de la aplicación por separado
 - Nombrado de métodos y variables de manera clara.
