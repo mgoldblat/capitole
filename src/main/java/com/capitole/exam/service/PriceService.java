@@ -2,7 +2,8 @@ package com.capitole.exam.service;
 
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
-import com.capitole.exam.exception.PriceSearchException;
+import com.capitole.exam.exception.PriceNotFoundException;
+import com.capitole.exam.exception.PriceSearchValidationException;
 import com.capitole.exam.repository.PriceRepository;
 import com.capitole.exam.repository.PriceSpecification;
 import lombok.RequiredArgsConstructor;
@@ -34,20 +35,23 @@ public class PriceService {
         priceSpecification,
         PageRequest.of(QUERY_PAGE, QUERY_SIZE, Sort.Direction.DESC, QUERY_SORT_BY));
 
-    return prices.get().findFirst().orElse(null);
+    return prices
+        .get()
+        .findFirst()
+        .orElseThrow(() -> new PriceNotFoundException("price_not_found", "Missing price"));
   }
 
   private void validateDto(PriceDto dto) {
     if (dto.getDateTime() == null) {
-      throw new PriceSearchException("date_time required");
+      throw new PriceSearchValidationException("param_required", "date_time required");
     }
 
     if (dto.getProductId() == 0) {
-      throw new PriceSearchException("product_id required");
+      throw new PriceSearchValidationException("param_required", "product_id required");
     }
 
     if (dto.getBrandId() == 0) {
-      throw new PriceSearchException("brand_id required");
+      throw new PriceSearchValidationException("param_required", "brand_id required");
     }
   }
 }
