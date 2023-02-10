@@ -24,8 +24,6 @@ valor numérico).
 - PRICE: precio final de venta.
 - CURR: iso de la moneda.
 
-
-
 ## REQUERIMIENTOS
 
 Construir una aplicación/servicio en SpringBoot que provea una end point rest de consulta  tal que:

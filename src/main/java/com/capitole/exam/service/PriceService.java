@@ -1,13 +1,53 @@
 package com.capitole.exam.service;
 
+import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
-import java.util.Map;
+import com.capitole.exam.exception.PriceSearchException;
+import com.capitole.exam.repository.PriceRepository;
+import com.capitole.exam.repository.PriceSpecification;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PriceService {
 
-  public Map<String, Object> search(PriceDto dto) {
-    return Map.of("price", "12345.5");
+  private static final String[] QUERY_SORT_BY = new String[]{"priority", "startDate"};
+  private static final int QUERY_PAGE = 0;
+  private static final int QUERY_SIZE = 1;
+
+  private final PriceRepository priceRepository;
+
+  public Price search(PriceDto dto) {
+    validateDto(dto);
+
+    PriceSpecification priceSpecification = PriceSpecification.builder()
+        .datetime(dto.getDateTime())
+        .productId(dto.getProductId())
+        .brandId(dto.getBrandId())
+        .build();
+
+    Page<Price> prices = priceRepository.findAll(
+        priceSpecification,
+        PageRequest.of(QUERY_PAGE, QUERY_SIZE, Sort.Direction.DESC, QUERY_SORT_BY));
+
+    return prices.get().findFirst().orElse(null);
+  }
+
+  private void validateDto(PriceDto dto) {
+    if (dto.getDateTime() == null) {
+      throw new PriceSearchException("date_time required");
+    }
+
+    if (dto.getProductId() == 0) {
+      throw new PriceSearchException("product_id required");
+    }
+
+    if (dto.getBrandId() == 0) {
+      throw new PriceSearchException("brand_id required");
+    }
   }
 }
