@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class PriceService {
 
   private static final String[] QUERY_SORT_BY = new String[]{"priority", "startDate"};
+  private static final Sort.Direction QUERY_SORT_DIRECTION = Sort.Direction.DESC;
   private static final int QUERY_PAGE = 0;
   private static final int QUERY_SIZE = 1;
 
@@ -33,7 +34,7 @@ public class PriceService {
 
     Page<Price> prices = priceRepository.findAll(
         priceSpecification,
-        PageRequest.of(QUERY_PAGE, QUERY_SIZE, Sort.Direction.DESC, QUERY_SORT_BY));
+        PageRequest.of(QUERY_PAGE, QUERY_SIZE, QUERY_SORT_DIRECTION, QUERY_SORT_BY));
 
     return prices
         .get()

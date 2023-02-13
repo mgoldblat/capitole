@@ -1,6 +1,7 @@
 package com.capitole.exam.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,8 +20,8 @@ public class Price {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private long brandId;
-  private String startDate;
-  private String endDate;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
   private int priceList;
   private long productId;
   private int priority;

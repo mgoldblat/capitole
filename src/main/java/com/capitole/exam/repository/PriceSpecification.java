@@ -2,6 +2,7 @@ package com.capitole.exam.repository;
 
 import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,7 +19,7 @@ public class PriceSpecification implements Specification<Price> {
   private static final String PROPERTY_PRODUCT_ID = "productId";
   private static final String PROPERTY_BRAND_ID = "brandId";
 
-  private String datetime;
+  private LocalDateTime datetime;
   private long productId;
   private long brandId;
   private Currency currency;
