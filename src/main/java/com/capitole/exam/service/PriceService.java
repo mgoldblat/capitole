@@ -16,10 +16,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PriceService {
 
-  private static final String[] QUERY_SORT_BY = new String[]{"priority", "startDate"};
-  private static final Sort.Direction QUERY_SORT_DIRECTION = Sort.Direction.DESC;
   private static final int QUERY_PAGE = 0;
   private static final int QUERY_SIZE = 1;
+  private static final Sort QUERY_SORT = Sort.by(
+      new Sort.Order(Sort.Direction.DESC, "priority"),
+      new Sort.Order(Sort.Direction.DESC, "startDate"));
 
   private final PriceRepository priceRepository;
 
@@ -34,7 +35,7 @@ public class PriceService {
 
     Page<Price> prices = priceRepository.findAll(
         priceSpecification,
-        PageRequest.of(QUERY_PAGE, QUERY_SIZE, QUERY_SORT_DIRECTION, QUERY_SORT_BY));
+        PageRequest.of(QUERY_PAGE, QUERY_SIZE, QUERY_SORT));
 
     return prices
         .get()
