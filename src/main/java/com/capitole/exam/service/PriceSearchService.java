@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PriceService {
+public class PriceSearchService {
 
   private static final int QUERY_PAGE = 0;
   private static final int QUERY_SIZE = 1;
@@ -45,15 +45,15 @@ public class PriceService {
 
   private void validateDto(PriceDto dto) {
     if (dto.getDateTime() == null) {
-      throw new PriceSearchValidationException("param_required", "date_time required");
+      throw new PriceSearchValidationException("date_time_required", "date_time required");
     }
 
     if (dto.getProductId() == 0) {
-      throw new PriceSearchValidationException("param_required", "product_id required");
+      throw new PriceSearchValidationException("product_id_required", "product_id required");
     }
 
     if (dto.getBrandId() == 0) {
-      throw new PriceSearchValidationException("param_required", "brand_id required");
+      throw new PriceSearchValidationException("brand_id_required", "brand_id required");
     }
   }
 }

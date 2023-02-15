@@ -12,10 +12,11 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpStatus;
 
 class PriceControllerTests extends ExamApplicationTest {
 
-  private static Stream<Arguments> arguments() {
+  private static Stream<Arguments> searchPriceSucceedArgs() {
     return Stream.of(
         Arguments.arguments(
             PriceDto.builder()
@@ -89,12 +90,44 @@ class PriceControllerTests extends ExamApplicationTest {
                 .build()));
   }
 
-  @ParameterizedTest
-  @MethodSource("arguments")
-  public void getPriceShouldReturnTheRightPrice(PriceDto dto, Price expected) {
+  private static Stream<Arguments> searchPriceFailsArgs() {
+    return Stream.of(
+        Arguments.arguments(
+            PriceDto.builder()
+                .productId(35455)
+                .dateTime(LocalDateTime.parse("2020-06-14T10:00:00"))
+                .build(),
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "brand_id_required"),
+        Arguments.arguments(
+            PriceDto.builder()
+                .brandId(1)
+                .dateTime(LocalDateTime.parse("2020-06-14T16:00:00"))
+                .build(),
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "product_id_required"),
+        Arguments.arguments(
+            PriceDto.builder()
+                .brandId(1)
+                .productId(35455)
+                .build(),
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "date_time_required"),
+        Arguments.arguments(
+            PriceDto.builder()
+                .brandId(1)
+                .productId(35455)
+                .dateTime(LocalDateTime.parse("1900-01-01T00:00:00"))
+                .build(),
+            HttpStatus.NOT_FOUND,
+            "price_not_found"));
+  }
 
+  @ParameterizedTest
+  @MethodSource("searchPriceSucceedArgs")
+  public void searchPriceShouldReturnTheRightPrice(PriceDto dto, Price expected) {
     Price result = post("/prices/search", dto)
-        .statusCode(200)
+        .statusCode(HttpStatus.OK.value())
         .extract()
         .as(Price.class);
 
@@ -104,5 +137,13 @@ class PriceControllerTests extends ExamApplicationTest {
     assertThat(result.getStartDate(), equalTo(expected.getStartDate()));
     assertThat(result.getEndDate(), equalTo(expected.getEndDate()));
     assertThat(result.getPrice(), equalTo(expected.getPrice()));
+  }
+
+  @ParameterizedTest
+  @MethodSource("searchPriceFailsArgs")
+  public void searchPriceShouldFail(PriceDto dto, HttpStatus responseStatus, String error) {
+    post("/prices/search", dto)
+        .statusCode(responseStatus.value())
+        .body("error", equalTo(error));
   }
 }
