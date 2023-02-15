@@ -109,17 +109,16 @@ Se valorará:
 ### Search Price
 - Request
 ```bash
-curl --request POST \
-  --url http://localhost:8080/prices/search \
-  --header 'Content-Type: application/json' \
-  --data '{
+curl --location --request POST 'http://localhost:8080/prices/search' \
+--header 'Content-Type: application/json' \
+--data-raw '{
 	"date_time": "2020-06-14T21:00:00",
 	"product_id": 35455,
 	"brand_id": 1
 }'
 ```
 - Response
-```bash
+```json
 {
 	"id": 1,
 	"brand_id": 1,
