@@ -104,3 +104,35 @@ Se valorará:
 - Calidad de Código.
 - Resultados correctos en los test.
 
+## Recursos
+
+### Search Price
+- Request
+```bash
+curl --request POST \
+  --url http://localhost:8080/prices/search \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"date_time": "2020-06-14T21:00:00",
+	"product_id": 35455,
+	"brand_id": 1
+}'
+```
+- Response
+```bash
+{
+	"id": 1,
+	"brand_id": 1,
+	"start_date": "2020-06-14T00:00:00",
+	"end_date": "2020-12-31T23:59:59",
+	"price_list": 1,
+	"product_id": 35455,
+	"priority": 0,
+	"price": 35.5,
+	"curr": "EUR"
+}
+```
+
+## Test
+
+`mvn test` or `mvn test jacoco:report`

@@ -28,7 +28,7 @@ public class PriceSearchService {
     validateDto(dto);
 
     PriceSpecification priceSpecification = PriceSpecification.builder()
-        .datetime(dto.getDateTime())
+        .dateTime(dto.getDateTime())
         .productId(dto.getProductId())
         .brandId(dto.getBrandId())
         .build();
