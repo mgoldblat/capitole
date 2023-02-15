@@ -1,4 +1,4 @@
-package com.capitole.exam;
+package com.capitole.exam.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ExamApplicationTest {
+public class ControllerTest {
 
   @LocalServerPort
   private int port;

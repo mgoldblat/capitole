@@ -3,7 +3,6 @@ package com.capitole.exam.controller;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import com.capitole.exam.ExamApplicationTest;
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
 import java.math.BigDecimal;
@@ -14,7 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpStatus;
 
-class PriceControllerTests extends ExamApplicationTest {
+class PriceControllerTests extends ControllerTest {
 
   private static Stream<Arguments> searchPriceSucceedArgs() {
     return Stream.of(
