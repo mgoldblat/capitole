@@ -9,9 +9,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 @Builder
+@Getter
 public class PriceSpecification implements Specification<Price> {
 
   private static final String PROPERTY_START_DATE = "startDate";
