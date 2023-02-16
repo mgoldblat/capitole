@@ -132,6 +132,12 @@ curl --location --request POST 'http://localhost:8080/prices/search' \
 }
 ```
 
-## Test
+## Install
 
-`mvn test` or `mvn test jacoco:report`
+```bash
+./mvnw clean install
+``` 
+or 
+```bash
+./mvnw clean install jacoco:report
+```
