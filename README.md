@@ -52,7 +52,7 @@ Se valorará:
 
 ## Recursos
 
-### Search Price
+### - Price Search
 - Request
 ```bash
 curl --location --request POST 'http://localhost:8080/prices/search' \
