@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
 import com.capitole.exam.exception.PriceNotFoundException;
@@ -61,22 +62,18 @@ public class PriceSearchServiceTest {
   @Test
   public void searchPriceShouldReturnPrice() {
     long priceId = 1;
-    long brandId = 2;
-    long productId = 3;
-    LocalDateTime date = LocalDateTime.now();
-
     ArgumentCaptor<PriceSpecification> priceSpecificationCaptor = ArgumentCaptor.forClass(PriceSpecification.class);
     ArgumentCaptor<PageRequest> pageRequestCaptor = ArgumentCaptor.forClass(PageRequest.class);
-
     Mockito.when(priceRepository.findAll(
             priceSpecificationCaptor.capture(),
             pageRequestCaptor.capture()))
         .thenReturn(new PageImpl<>(List.of(Price.builder().id(priceId).build())));
 
     PriceDto dto = PriceDto.builder()
-        .brandId(brandId)
-        .productId(productId)
-        .dateTime(date)
+        .brandId(2)
+        .productId(3)
+        .dateTime(LocalDateTime.now())
+        .curr(Currency.EUR.name())
         .build();
     Price price = priceSearchService.search(dto);
 

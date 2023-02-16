@@ -31,6 +31,7 @@ public class PriceSearchService {
         .dateTime(dto.getDateTime())
         .productId(dto.getProductId())
         .brandId(dto.getBrandId())
+        .curr(dto.getCurr())
         .build();
 
     Page<Price> prices = priceRepository.findAll(

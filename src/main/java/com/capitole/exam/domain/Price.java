@@ -3,8 +3,6 @@ package com.capitole.exam.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +30,5 @@ public class Price {
   private long productId;
   private int priority;
   private BigDecimal price;
-  @Enumerated(EnumType.STRING)
-  private Currency curr;
+  private String curr;
 }

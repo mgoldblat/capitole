@@ -3,6 +3,7 @@ package com.capitole.exam.controller;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
 import java.math.BigDecimal;
@@ -117,6 +118,15 @@ class PriceControllerTests extends ControllerTest {
                 .brandId(1)
                 .productId(35455)
                 .dateTime(LocalDateTime.parse("1900-01-01T00:00:00"))
+                .build(),
+            HttpStatus.NOT_FOUND,
+            "price_not_found"),
+        Arguments.arguments(
+            PriceDto.builder()
+                .brandId(1)
+                .productId(35455)
+                .dateTime(LocalDateTime.parse("2020-06-14T16:00:00"))
+                .curr(Currency.USD.name())
                 .build(),
             HttpStatus.NOT_FOUND,
             "price_not_found"));

@@ -1,10 +1,10 @@
 package com.capitole.exam.repository;
 
-import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -19,11 +19,12 @@ public class PriceSpecification implements Specification<Price> {
   private static final String PROPERTY_END_DATE = "endDate";
   private static final String PROPERTY_PRODUCT_ID = "productId";
   private static final String PROPERTY_BRAND_ID = "brandId";
+  private static final String PROPERTY_CURRENCY = "curr";
 
   private LocalDateTime dateTime;
   private long productId;
   private long brandId;
-  private Currency currency;
+  private String curr;
 
   @Override
   public Predicate toPredicate(Root<Price> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -40,6 +41,10 @@ public class PriceSpecification implements Specification<Price> {
 
     if (productId != 0) {
       predicates.add(criteriaBuilder.equal(root.get(PROPERTY_BRAND_ID), brandId));
+    }
+
+    if (curr != null) {
+      predicates.add(criteriaBuilder.equal(root.get(PROPERTY_CURRENCY), curr.toUpperCase(Locale.ROOT)));
     }
 
     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
