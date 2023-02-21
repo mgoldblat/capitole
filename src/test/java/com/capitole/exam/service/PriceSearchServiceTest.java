@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
+import com.capitole.exam.dto.SearchResultDto;
 import com.capitole.exam.exception.PriceNotFoundException;
 import com.capitole.exam.exception.PriceSearchValidationException;
 import com.capitole.exam.repository.PriceRepository;
@@ -75,9 +76,10 @@ public class PriceSearchServiceTest {
         .dateTime(LocalDateTime.now())
         .curr(Currency.EUR.name())
         .build();
-    Price price = priceSearchService.search(dto);
+    SearchResultDto<Price> result = priceSearchService.search(dto);
 
-    assertEquals(price.getId(), priceId);
+    assertEquals(1, result.getTotal());
+    assertEquals(result.getData().get(0).getId(), priceId);
 
     verify(priceRepository, times(1)).findAll(
         priceSpecificationCaptor.capture(), pageRequestCaptor.capture());

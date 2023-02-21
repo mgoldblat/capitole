@@ -6,8 +6,10 @@ import static org.hamcrest.Matchers.equalTo;
 import com.capitole.exam.domain.Currency;
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
+import com.capitole.exam.dto.SearchResultDto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -134,18 +136,21 @@ class PriceControllerTests extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("searchPriceSucceedArgs")
+  @SuppressWarnings(value = "unchecked")
   public void searchPriceShouldReturnTheRightPrice(PriceDto dto, Price expected) {
-    Price result = post("/prices/search", dto)
+    SearchResultDto<?> result = post("/prices/search", dto)
         .statusCode(HttpStatus.OK.value())
         .extract()
-        .as(Price.class);
+        .as(SearchResultDto.class);
 
-    assertThat(result.getProductId(), equalTo(expected.getProductId()));
-    assertThat(result.getBrandId(), equalTo(expected.getBrandId()));
-    assertThat(result.getPriceList(), equalTo(expected.getPriceList()));
-    assertThat(result.getStartDate(), equalTo(expected.getStartDate()));
-    assertThat(result.getEndDate(), equalTo(expected.getEndDate()));
-    assertThat(result.getPrice(), equalTo(expected.getPrice()));
+    Map<String, Object> price = (Map<String, Object>) result.getData().get(0);
+    assertThat(result.getTotal(), equalTo(1));
+    assertThat(Long.valueOf(price.get("product_id").toString()), equalTo(expected.getProductId()));
+    assertThat(Long.valueOf(price.get("brand_id").toString()), equalTo(expected.getBrandId()));
+    assertThat(price.get("price_list"), equalTo(expected.getPriceList()));
+    assertThat(LocalDateTime.parse(price.get("start_date").toString()), equalTo(expected.getStartDate()));
+    assertThat(LocalDateTime.parse(price.get("end_date").toString()), equalTo(expected.getEndDate()));
+    assertThat(new BigDecimal(price.get("price").toString()), equalTo(expected.getPrice()));
   }
 
   @ParameterizedTest

@@ -2,6 +2,7 @@ package com.capitole.exam.service;
 
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
+import com.capitole.exam.dto.SearchResultDto;
 import com.capitole.exam.exception.PriceNotFoundException;
 import com.capitole.exam.exception.PriceSearchValidationException;
 import com.capitole.exam.repository.PriceRepository;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PriceSearchService {
+public class PriceSearchService implements SearchService<PriceDto, Price> {
 
   private static final int QUERY_PAGE = 0;
   private static final int QUERY_SIZE = 1;
@@ -24,7 +25,7 @@ public class PriceSearchService {
 
   private final PriceRepository priceRepository;
 
-  public Price search(PriceDto dto) {
+  public SearchResultDto<Price> search(PriceDto dto) {
     validateDto(dto);
 
     PriceSpecification priceSpecification = PriceSpecification.builder()
@@ -38,10 +39,11 @@ public class PriceSearchService {
         priceSpecification,
         PageRequest.of(QUERY_PAGE, QUERY_SIZE, QUERY_SORT));
 
-    return prices
-        .get()
-        .findFirst()
-        .orElseThrow(() -> new PriceNotFoundException("price_not_found", "Missing price"));
+    if (prices.isEmpty()) {
+      throw new PriceNotFoundException("price_not_found", "Missing price");
+    }
+
+    return new SearchResultDto<>(prices.getSize(), prices.getContent());
   }
 
   private void validateDto(PriceDto dto) {

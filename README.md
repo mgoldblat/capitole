@@ -66,15 +66,20 @@ curl --location --request POST 'http://localhost:8080/prices/search' \
 - Response
 ```json
 {
-	"id": 1,
-	"brand_id": 1,
-	"start_date": "2020-06-14T00:00:00",
-	"end_date": "2020-12-31T23:59:59",
-	"price_list": 1,
-	"product_id": 35455,
-	"priority": 0,
-	"price": 35.5,
-	"curr": "EUR"
+	"total": 1,
+	"data": [
+		{
+			"id": 1,
+			"brand_id": 1,
+			"start_date": "2020-06-14T00:00:00",
+			"end_date": "2020-12-31T23:59:59",
+			"price_list": 1,
+			"product_id": 35455,
+			"priority": 0,
+			"price": 35.5,
+			"curr": "EUR"
+		}
+	]
 }
 ```
 

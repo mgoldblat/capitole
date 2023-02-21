@@ -2,6 +2,7 @@ package com.capitole.exam.controller;
 
 import com.capitole.exam.domain.Price;
 import com.capitole.exam.dto.PriceDto;
+import com.capitole.exam.dto.SearchResultDto;
 import com.capitole.exam.service.PriceSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class PriceController {
   private final PriceSearchService priceSearchService;
 
   @PostMapping("/search")
-  public ResponseEntity<Price> search(@RequestBody PriceDto dto) {
+  public ResponseEntity<SearchResultDto<Price>> search(@RequestBody PriceDto dto) {
     return new ResponseEntity<>(priceSearchService.search(dto), HttpStatus.OK);
   }
 }
